@@ -1,0 +1,12 @@
+type Message @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  body: String!
+  from: String!
+  roomId: ID
+  createdAt: AWSDateTime
+}
+
+type Subscription {
+  onMutateMessage(roomId: ID): Message
+    @aws_subscribe(mutations: ["createMessage", "updateMessage"])
+}
